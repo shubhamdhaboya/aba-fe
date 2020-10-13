@@ -19,7 +19,7 @@ function AuthForm() {
 		instance
 			.post("/auth", { mobile, validateMethod })
 			.then(res => {
-				if (res.data.success) {
+				if (res.success) {
 					setGoToOTP(true);
 					return;
 				}

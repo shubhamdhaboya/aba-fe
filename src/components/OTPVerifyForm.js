@@ -4,7 +4,8 @@ import { Spinner } from "react-bootstrap";
 import instance from "../axios";
 import { Redirect } from "react-router-dom";
 import { Button } from "react-bootstrap";
-import { useToasts } from 'react-toast-notifications'
+import { useToasts } from "react-toast-notifications";
+import { useAuth } from "../context/auth";
 
 function OTPVerifyForm(props) {
 	const timeToWait = 50;
@@ -18,7 +19,7 @@ function OTPVerifyForm(props) {
 	const [allowToReset, setAllowToReset] = useState(false);
 	const [lastResetOn, setLastResetOn] = useState(parseInt(Date.now() / 1000));
 	const [remainingTime, setRemainingTime] = useState(timeToWait);
-
+	const { setUser } = useAuth();
 	const { addToast } = useToasts();
 
 	useEffect(() => {
@@ -63,8 +64,9 @@ function OTPVerifyForm(props) {
 			// otp verify call
 			instance.post("/verify/otp", { mobile: props.mobile, otp })
 			.then(res => {
-				if (res.data.type === "NewUser") {
+				if (res.type === "NewUser") {
 					// redirect to select user type
+					setUser(res);
 					setGoToSelectUserType(true);
 				}
 			})

@@ -89,3 +89,21 @@ body {
     left: 45%;
     display: none;
 }
+
+.separator {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.separator::before, .separator::after {
+	max-width: 37.5%;
+	content: '';
+	flex: 1;
+	border-bottom: 1px solid var(--secondary-one);
+}
+.separator::before {
+	margin-right: .25em;
+}
+.separator::after {
+	margin-left: .25em;
+}
